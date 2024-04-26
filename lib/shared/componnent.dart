@@ -47,7 +47,6 @@ Widget defaultTextFormField({
   required TextEditingController controller,
   required TextInputType type,
   Function? onSubmit,
-  Function? onTap,
   required String hintText,
   required String labelText,
   required IconData preFix,
@@ -65,9 +64,6 @@ Widget defaultTextFormField({
         onSubmit!(s);
       },
 
-      onTap: () {
-        onTap!();
-      },
       validator: (value) {
         if (value == null || value.isEmpty) return 'لابد من ملئ هذا الحقل';
         return null;

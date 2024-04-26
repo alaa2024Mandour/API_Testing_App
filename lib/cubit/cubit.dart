@@ -1,10 +1,15 @@
 import 'package:api_test/core/API/api_consumer.dart';
+import 'package:api_test/core/API/end_points.dart';
+import 'package:api_test/core/errors/Exceptions.dart';
+import 'package:api_test/models/logIn_model.dart';
+import 'package:api_test/shared/cachHelper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:api_test/cubit/status.dart';
-import 'package:dio/dio.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 
 class LoginCubit extends Cubit <LoginFormStatus> {
   LoginCubit(this.API) : super(LoginInitialStatus());
@@ -28,20 +33,26 @@ class LoginCubit extends Cubit <LoginFormStatus> {
     emit(LoginChangePassStatus());
   }
 
+  LogInModel? user;
   signIn() async{
     try {
       emit(LoginLoadingStatus());
-      final response = await Dio().post("https://food-api-omega.vercel.app/api/v1/user/signin", data: {
-        "email":emailController.text,
-        "password":passController.text,
+      final response = await API.post(
+          EndPoints.logIn,
+          data: {
+            ApiKeys.email:emailController.text,
+            ApiKeys.password:passController.text,
       });
+      user=LogInModel.fromJson(response);
+      final decodedToken = JwtDecoder.decode(user!.token);
+      CachHelper.saveData(key: ApiKeys.token, value: user!.token);
+      CachHelper.saveData(key: ApiKeys.id, value: decodedToken[ApiKeys.id]);
+      print(decodedToken['id']);
       emit(LoginSuccessStatus());
       print(response);
-    } catch (e) {
+    } on ServerException catch (e) {
       // TODO
-      emit(LoginErrorStatus(e.toString()));
-
-      print(e.toString());
+      emit(LoginErrorStatus(e.errorModel.ErrorMessage));
     }
   }
 }

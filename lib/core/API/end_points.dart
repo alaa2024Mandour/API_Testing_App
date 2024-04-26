@@ -7,7 +7,9 @@ class EndPoints {
 class ApiKeys {
   static String status = "status",
                 errorMessage="ErrorMessage",
+                email="email",
                 password="password",
+                message="message",
                 token="token",
                 id="id";
 }
