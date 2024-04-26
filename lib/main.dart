@@ -1,12 +1,15 @@
 import 'package:api_test/core/API/dio_consumer.dart';
 import 'package:api_test/cubit/cubit.dart';
 import 'package:api_test/cubit/status.dart';
+import 'package:api_test/shared/cachHelper.dart';
 import 'package:api_test/user/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  CachHelper.init;
   runApp(const MyApp());
 }
 

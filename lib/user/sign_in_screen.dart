@@ -78,10 +78,8 @@ class SignIn extends StatelessWidget {
                           state is LoginLoadingStatus ? Center(child: CircularProgressIndicator())  : defaultButton(
                             text: 'Sign in',
                             function: (){
-                              cubit.signIn();
                               if(cubit.formKey.currentState!.validate()){
-                                print(cubit.emailController.text);
-                                print(cubit.passController.text);
+                                cubit.signIn();
                               }
                             },
                           ),

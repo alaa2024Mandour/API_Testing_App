@@ -44,6 +44,7 @@ dev_dependencies:
   conditional_builder_null_safety: ^0.0.6
   carousel_slider: ^4.2.1
   dio: ^5.3.3
+  jwt_decoder: ^2.0.1
   shared_preferences: ^2.2.2
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
