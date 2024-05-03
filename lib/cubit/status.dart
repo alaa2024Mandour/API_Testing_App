@@ -14,3 +14,22 @@ class LoginErrorStatus extends LoginFormStatus {
 }
 
 class LoginChangePassStatus extends LoginFormStatus {}
+
+class SignUpGetProfileImage extends LoginFormStatus {}
+
+class SignUpInitialStatus extends LoginFormStatus {}
+
+class SignUpLoadingStatus extends LoginFormStatus {}
+
+class SignUpSuccessStatus extends LoginFormStatus {
+  final String successMessage ;
+
+  SignUpSuccessStatus({required this.successMessage});
+}
+
+class SignUpErrorStatus extends LoginFormStatus {
+  final String errorMessage ;
+
+  SignUpErrorStatus(this.errorMessage);
+
+}

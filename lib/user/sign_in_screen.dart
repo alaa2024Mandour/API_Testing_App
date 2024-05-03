@@ -1,19 +1,23 @@
 import 'package:api_test/cubit/cubit.dart';
-import 'package:api_test/shared/componnent.dart';
+import 'package:api_test/shared/component.dart';
+import 'package:api_test/user/profile_screen.dart';
+import 'package:api_test/user/sign_up_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/status.dart';
 
 class SignIn extends StatelessWidget {
-
+  const SignIn({super.key});
   @override
   Widget build(BuildContext context) {
     return  BlocConsumer<LoginCubit,LoginFormStatus>(
         listener: (context, state) {
           if (state is LoginSuccessStatus){
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("Success")));
-          }else if (state is LoginErrorStatus){
+            navegateAndFinish(context, const ProfileScreen());
+          }
+          else if (state is LoginErrorStatus) {
             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content:Text(state.errorMessage)));
           }
         },
@@ -25,7 +29,7 @@ class SignIn extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
-                  Image(image: AssetImage('assets/images/friendship.png')),
+                  const Image(image: AssetImage('assets/images/friendship.png')),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Form(
@@ -33,11 +37,12 @@ class SignIn extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextTitle(
+                          textTitle(
                             title: 'Sign-in',
                             size: 30,
                           ),
-                          SizedBox(height: 15,),
+                         const SizedBox(height: 15,),
+
                           defaultTextFormField(
                             controller: cubit.emailController,
                             type: TextInputType.emailAddress,
@@ -46,8 +51,7 @@ class SignIn extends StatelessWidget {
                             preFix: Icons.email,
                           ),
 
-                          SizedBox(height: 15,),
-
+                          const SizedBox(height: 15,),
 
                           defaultTextFormField(
                             controller: cubit.passController,
@@ -61,7 +65,7 @@ class SignIn extends StatelessWidget {
                               cubit.changePasswordVisibility();
                             },
                           ),
-                          Container(
+                           SizedBox(
                             width: double.infinity,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -73,9 +77,10 @@ class SignIn extends StatelessWidget {
                             ),
                           ),
 
-                          SizedBox(height: 25,),
+                          const SizedBox(height: 25,),
 
-                          state is LoginLoadingStatus ? Center(child: CircularProgressIndicator())  : defaultButton(
+                          state is LoginLoadingStatus ? const Center(child: CircularProgressIndicator())
+                              : defaultButton(
                             text: 'Sign in',
                             function: (){
                               if(cubit.formKey.currentState!.validate()){
@@ -87,15 +92,16 @@ class SignIn extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "Don't have an acount yet ....",
+                              const Text(
+                                "Don't have an account yet ....",
                               ),
                               defaultTextButton(
-                                  function: (){},
+                                  function: (){
+                                    navigateTo(context,const SignUp());
+                                  },
                                   buttonlable: "Sign Up")
                             ],
                           )
-
                         ],
                       ),
                     ),
@@ -110,11 +116,11 @@ class SignIn extends StatelessWidget {
 }
 
 
-Widget TextTitle({
+Widget  textTitle({
   required String title,
   required double size,
 }) =>Text(
-  "${title}",
+  title,
   style: TextStyle(
     fontSize: size,
     fontWeight: FontWeight.w900,
