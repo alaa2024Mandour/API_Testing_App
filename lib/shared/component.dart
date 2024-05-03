@@ -65,7 +65,7 @@ Widget defaultTextFormField({
       },
 
       validator: (value) {
-        if (value == null || value.isEmpty) return 'لابد من ملئ هذا الحقل';
+        if (value == null || value.isEmpty) return 'Required';
         return null;
       },
 
@@ -94,3 +94,16 @@ Widget defaultTextFormField({
         fontFamily: 'Tajawal',
       ),
     );
+
+
+void navigateTo(context, widget) => Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => widget),
+);
+
+void navegateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(
+        builder: (context) => widget),
+        (route) => false
+);
